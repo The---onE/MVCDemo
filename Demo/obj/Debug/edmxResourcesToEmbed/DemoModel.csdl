@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DemoModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="DemoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Information" EntityType="DemoModel.Information" />
+    <EntitySet Name="Modify" EntityType="DemoModel.Modify" />
+    <EntitySet Name="User" EntityType="DemoModel.User" />
+    <AssociationSet Name="FK_Information_User" Association="DemoModel.FK_Information_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Information" EntitySet="Information" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Modify_Information" Association="DemoModel.FK_Modify_Information">
+      <End Role="Information" EntitySet="Information" />
+      <End Role="Modify" EntitySet="Modify" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Modify_User" Association="DemoModel.FK_Modify_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Modify" EntitySet="Modify" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Information">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="createdUser" Type="Int32" Nullable="false" />
+    <Property Name="data" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="createdTime" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="User" Relationship="DemoModel.FK_Information_User" FromRole="Information" ToRole="User" />
+    <NavigationProperty Name="Modify" Relationship="DemoModel.FK_Modify_Information" FromRole="Information" ToRole="Modify" />
+  </EntityType>
+  <EntityType Name="Modify">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="time" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="before" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="after" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="informationId" Type="Int32" Nullable="false" />
+    <Property Name="userId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Information" Relationship="DemoModel.FK_Modify_Information" FromRole="Modify" ToRole="Information" />
+    <NavigationProperty Name="User" Relationship="DemoModel.FK_Modify_User" FromRole="Modify" ToRole="User" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="password" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="status" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Information" Relationship="DemoModel.FK_Information_User" FromRole="User" ToRole="Information" />
+    <NavigationProperty Name="Modify" Relationship="DemoModel.FK_Modify_User" FromRole="User" ToRole="Modify" />
+  </EntityType>
+  <Association Name="FK_Information_User">
+    <End Role="User" Type="DemoModel.User" Multiplicity="1" />
+    <End Role="Information" Type="DemoModel.Information" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Information">
+        <PropertyRef Name="createdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Modify_Information">
+    <End Role="Information" Type="DemoModel.Information" Multiplicity="1" />
+    <End Role="Modify" Type="DemoModel.Modify" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Information">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Modify">
+        <PropertyRef Name="informationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Modify_User">
+    <End Role="User" Type="DemoModel.User" Multiplicity="1" />
+    <End Role="Modify" Type="DemoModel.Modify" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Modify">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

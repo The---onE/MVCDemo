@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DemoModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="DemoModelStoreContainer">
+    <EntitySet Name="Information" EntityType="DemoModel.Store.Information" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Modify" EntityType="DemoModel.Store.Modify" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="User" EntityType="DemoModel.Store.User" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Information_User" Association="DemoModel.Store.FK_Information_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Information" EntitySet="Information" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Modify_Information" Association="DemoModel.Store.FK_Modify_Information">
+      <End Role="Information" EntitySet="Information" />
+      <End Role="Modify" EntitySet="Modify" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Modify_User" Association="DemoModel.Store.FK_Modify_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Modify" EntitySet="Modify" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Information">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="createUser" Type="int" Nullable="false" />
+    <Property Name="data" Type="nchar" MaxLength="32" />
+    <Property Name="time" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Modify">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="time" Type="datetime" Nullable="false" />
+    <Property Name="change" Type="nchar" MaxLength="32" />
+    <Property Name="informationId" Type="int" Nullable="false" />
+    <Property Name="userId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="nchar" Nullable="false" MaxLength="32" />
+    <Property Name="password" Type="nchar" Nullable="false" MaxLength="32" />
+  </EntityType>
+  <Association Name="FK_Information_User">
+    <End Role="User" Type="DemoModel.Store.User" Multiplicity="1" />
+    <End Role="Information" Type="DemoModel.Store.Information" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Information">
+        <PropertyRef Name="createUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Modify_Information">
+    <End Role="Information" Type="DemoModel.Store.Information" Multiplicity="1" />
+    <End Role="Modify" Type="DemoModel.Store.Modify" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Information">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Modify">
+        <PropertyRef Name="informationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Modify_User">
+    <End Role="User" Type="DemoModel.Store.User" Multiplicity="1" />
+    <End Role="Modify" Type="DemoModel.Store.Modify" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Modify">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
