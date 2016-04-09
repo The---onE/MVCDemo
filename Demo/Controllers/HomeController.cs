@@ -24,8 +24,18 @@ namespace Demo.Controllers
                     User user = UserManager.GetInstance().user;
                     int id = user.id;
 
-                    string data = "test";
-                    InformationManager.GetInstance().Add(id, data);
+                    var list = InformationManager.GetInstance().SelectAll();
+
+                    foreach (var info in list)
+                    {
+                        string s = info.data;
+                    }
+
+                    list = InformationManager.GetInstance().SelectByCreator(id);
+                    foreach (var info in list)
+                    {
+                        string s = info.data;
+                    }
                 }
             }
 

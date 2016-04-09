@@ -21,7 +21,6 @@ namespace Demo.Models
         public int informationId { get; set; }
         public int userId { get; set; }
     
-        public virtual Information Information { get; set; }
         public virtual User User { get; set; }
     }
 }

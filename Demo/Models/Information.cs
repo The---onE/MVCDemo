@@ -14,11 +14,6 @@ namespace Demo.Models
     
     public partial class Information
     {
-        public Information()
-        {
-            this.Modify = new HashSet<Modify>();
-        }
-    
         public int id { get; set; }
         public int createdUser { get; set; }
         public string data { get; set; }
@@ -26,6 +21,5 @@ namespace Demo.Models
         public System.DateTime updatedTime { get; set; }
     
         public virtual User User { get; set; }
-        public virtual ICollection<Modify> Modify { get; set; }
     }
 }

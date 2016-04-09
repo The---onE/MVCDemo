@@ -49,29 +49,70 @@ namespace Demo.Manager
         {
             var context = new DemoEntities();
             DateTime now = DateTime.Now;
-            var result = context.Information.Where(c => c.id == infoId);
-            if (result.Count() == 0)
+            var info = context.Information.Where(c => c.id == infoId)
+                .FirstOrDefault();
+            if (info == null)
             {
                 return NOT_EXIST;
             }
 
-            foreach (var info in result)
-            {
-                Modify modify = new Modify();
-                modify.time = now;
-                modify.before = info.data;
-                modify.after = data;
-                modify.informationId = info.id;
-                modify.userId = userId;
-                context.Modify.Add(modify);
+            Modify modify = new Modify();
+            modify.time = now;
+            modify.before = info.data;
+            modify.after = data;
+            modify.informationId = info.id;
+            modify.userId = userId;
+            context.Modify.Add(modify);
 
-                info.data = data;
-                info.updatedTime = now;
-                context.Entry(info).State = EntityState.Modified;
-            }
+            info.data = data;
+            info.updatedTime = now;
+            context.Entry(info).State = EntityState.Modified;
             context.SaveChanges();
 
             return SUCCESS;
+        }
+
+        public int Delete(int infoId, int userId)
+        {
+            var context = new DemoEntities();
+            DateTime now = DateTime.Now;
+            var info = context.Information.Where(c => c.id == infoId)
+                .FirstOrDefault();
+            if (info == null)
+            {
+                return NOT_EXIST;
+            }
+
+            Modify modify = new Modify();
+            modify.time = now;
+            modify.before = info.data;
+            modify.after = null;
+            modify.informationId = info.id;
+            modify.userId = userId;
+            context.Modify.Add(modify);
+
+            context.Entry(info).State = EntityState.Deleted;
+            context.SaveChanges();
+
+            return SUCCESS;
+        }
+
+        public List<Information> SelectAll()
+        {
+            var context = new DemoEntities();
+            DateTime now = DateTime.Now;
+            var info = context.Information;
+
+            return info.ToList();
+        }
+
+        public List<Information> SelectByCreator(int userId)
+        {
+            var context = new DemoEntities();
+            DateTime now = DateTime.Now;
+            var info = context.Information.Where(c => c.createdUser == userId);
+
+            return info.ToList();
         }
     }
 }

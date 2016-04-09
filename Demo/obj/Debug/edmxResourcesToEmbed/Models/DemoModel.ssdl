@@ -8,10 +8,6 @@
       <End Role="User" EntitySet="User" />
       <End Role="Information" EntitySet="Information" />
     </AssociationSet>
-    <AssociationSet Name="FK_Modify_Information" Association="DemoModel.Store.FK_Modify_Information">
-      <End Role="Information" EntitySet="Information" />
-      <End Role="Modify" EntitySet="Modify" />
-    </AssociationSet>
     <AssociationSet Name="FK_Modify_User" Association="DemoModel.Store.FK_Modify_User">
       <End Role="User" EntitySet="User" />
       <End Role="Modify" EntitySet="Modify" />
@@ -56,18 +52,6 @@
       </Principal>
       <Dependent Role="Information">
         <PropertyRef Name="createdUser" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Modify_Information">
-    <End Role="Information" Type="DemoModel.Store.Information" Multiplicity="1" />
-    <End Role="Modify" Type="DemoModel.Store.Modify" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Information">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="Modify">
-        <PropertyRef Name="informationId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -61,27 +61,23 @@ namespace Demo.Manager
         public int Login(string username, string password)
         {
             var context = new DemoEntities();
-            var data = context.User.Where(c => c.username.Equals(username));
-            if (data.Count() == 0)
+            var u = context.User.Where(c => c.username.Equals(username)).FirstOrDefault();
+            if (u == null)
             {
                 return USERNAME_ERROR;
             }
 
-            foreach (var u in data)
+            string psw = u.password;
+            if (psw.Equals(password))
             {
-                string psw = u.password;
-                if (psw.Equals(password))
-                {
-                    user = u;
-                    loginFlag = true;
-                    return SUCCESS;
-                }
-                else
-                {
-                    return MATCH_ERROR;
-                }
+                user = u;
+                loginFlag = true;
+                return SUCCESS;
             }
-            return MATCH_ERROR;
+            else
+            {
+                return MATCH_ERROR;
+            }
         }
     }
 }
