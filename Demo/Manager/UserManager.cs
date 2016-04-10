@@ -14,6 +14,7 @@ namespace Demo.Manager
         public const int USERNAME_EXIST = -3;
         public const int PASSWORD_ERROR = -4;
 
+        DemoEntities context;
         private static UserManager instance = new UserManager();
         public static UserManager GetInstance()
         {
@@ -22,6 +23,7 @@ namespace Demo.Manager
         private UserManager()
         {
             loginFlag = false;
+            context = ContextManager.demoContext;
         }
 
         public User user { get; private set; }
@@ -30,7 +32,6 @@ namespace Demo.Manager
 
         public int Register(string username, string password)
         {
-            var context = new DemoEntities();
             string format = @"^[a-zA-Z0-9_]{3,16}$";
             if (!System.Text.RegularExpressions.Regex.IsMatch(username, format))
             {
@@ -43,7 +44,7 @@ namespace Demo.Manager
                 return USERNAME_EXIST;
             }
 
-            format = @"^[0-9a-zA-Z!@#$%^&*()_\-+|{}?]{3,16}$";
+            format = @"^[0-9a-zA-Z!@#$%^&*()_\-+|{}?]{6,16}$";
             if (!System.Text.RegularExpressions.Regex.IsMatch(password, format))
             {
                 return PASSWORD_ERROR;
@@ -60,7 +61,6 @@ namespace Demo.Manager
 
         public int Login(string username, string password)
         {
-            var context = new DemoEntities();
             var u = context.User.Where(c => c.username.Equals(username)).FirstOrDefault();
             if (u == null)
             {

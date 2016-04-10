@@ -12,18 +12,26 @@ namespace Demo.Manager
         public const int SUCCESS = 1;
         public const int NOT_EXIST = -1;
 
-        private static InformationManager instance = new InformationManager();
+        DemoEntities context;
+        private static InformationManager instance;
         public static InformationManager GetInstance()
         {
+            lock ("information")
+            {
+                if (instance == null)
+                {
+                    instance = new InformationManager();
+                }
+            }
             return instance;
         }
         private InformationManager()
         {
+            context = ContextManager.demoContext;
         }
 
         public int Add(int userId, string data)
         {
-            var context = new DemoEntities();
             DateTime now = DateTime.Now;
             Information info = new Information();
             info.createdUser = userId;
@@ -47,7 +55,6 @@ namespace Demo.Manager
 
         public int Modify(int infoId, int userId, string data)
         {
-            var context = new DemoEntities();
             DateTime now = DateTime.Now;
             var info = context.Information.Where(c => c.id == infoId)
                 .FirstOrDefault();
@@ -74,7 +81,6 @@ namespace Demo.Manager
 
         public int Delete(int infoId, int userId)
         {
-            var context = new DemoEntities();
             DateTime now = DateTime.Now;
             var info = context.Information.Where(c => c.id == infoId)
                 .FirstOrDefault();
@@ -99,7 +105,6 @@ namespace Demo.Manager
 
         public List<Information> SelectAll()
         {
-            var context = new DemoEntities();
             DateTime now = DateTime.Now;
             var info = context.Information;
 
@@ -108,7 +113,6 @@ namespace Demo.Manager
 
         public List<Information> SelectByCreator(int userId)
         {
-            var context = new DemoEntities();
             DateTime now = DateTime.Now;
             var info = context.Information.Where(c => c.createdUser == userId);
 

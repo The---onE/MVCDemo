@@ -16,27 +16,65 @@ namespace Demo.Controllers
     {
         public ActionResult Index()
         {
-            int result = UserManager.GetInstance().Login("xmx", "12345678");
-            if (result == UserManager.SUCCESS)
+            return View();
+        }
+
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ProcessRegister(string username, string password)
+        {
+            //string username = Request["username"];
+            //string password = Request["password"];
+            int result = UserManager.GetInstance().Register(username, password);
+            switch (result)
             {
-                if (UserManager.GetInstance().loginFlag)
-                {
-                    User user = UserManager.GetInstance().user;
-                    int id = user.id;
+                case UserManager.SUCCESS:
+                    ViewData["result"] = "注册成功";
+                    break;
 
-                    var list = InformationManager.GetInstance().SelectAll();
+                case UserManager.USERNAME_EXIST:
+                    ViewData["result"] = "用户名已存在";
+                    break;
 
-                    foreach (var info in list)
-                    {
-                        string s = info.data;
-                    }
+                case UserManager.USERNAME_ERROR:
+                    ViewData["result"] = "用户名格式不正确";
+                    break;
 
-                    list = InformationManager.GetInstance().SelectByCreator(id);
-                    foreach (var info in list)
-                    {
-                        string s = info.data;
-                    }
-                }
+                case UserManager.PASSWORD_ERROR:
+                    ViewData["result"] = "密码格式不正确";
+                    break;
+            }
+
+            return View();
+        }
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ProcessLogin(string username, string password)
+        {
+            int result = UserManager.GetInstance().Login(username, password);
+            switch (result)
+            {
+                case UserManager.SUCCESS:
+                    ViewData["result"] = "登录成功";
+                    var user = UserManager.GetInstance().user;
+                    break;
+
+                case UserManager.USERNAME_ERROR:
+                    ViewData["result"] = "用户名不存在";
+                    break;
+
+                case UserManager.MATCH_ERROR:
+                    ViewData["result"] = "用户名密码不匹配";
+                    break;
             }
 
             return View();
