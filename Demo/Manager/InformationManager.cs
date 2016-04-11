@@ -103,9 +103,21 @@ namespace Demo.Manager
             return SUCCESS;
         }
 
+        public int Count()
+        {
+            return context.Information.Count();
+        }
+
         public List<Information> SelectAll()
         {
             var info = context.Information;
+
+            return info.ToList();
+        }
+
+        public List<Information> SelectByPage(int size, int index)
+        {
+            var info = context.Information.OrderByDescending(c => c.updatedTime).Skip(size * (index - 1)).Take(size);
 
             return info.ToList();
         }

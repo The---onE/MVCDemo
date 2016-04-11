@@ -51,5 +51,8 @@
     <% } %>
     
     </table>
+    <div>
+        <%: Html.ShowPageNavigate((int)ViewBag.pageIndex, (int)ViewBag.pageSize, (int)ViewBag.Total) %> 
+    </div>
 </body>
 </html>

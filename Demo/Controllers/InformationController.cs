@@ -14,6 +14,9 @@ namespace Demo.Controllers
     {
         private DemoEntities db = new DemoEntities();
 
+        const int DefaultPageSize = 5;
+        const int DefaultPageIndex = 1;
+
         //
         // GET: /Information/
 
@@ -22,7 +25,16 @@ namespace Demo.Controllers
             User user = (User)Session["User"];
             if (user != null)
             {
-                var information = InformationManager.GetInstance().SelectAll();
+                //var information = InformationManager.GetInstance().SelectAll();
+                int pageSize = Request["pageSize"] == null ? DefaultPageSize : int.Parse(Request["pageSize"]);
+                int pageIndex = Request["pageIndex"] == null ? DefaultPageIndex : int.Parse(Request["pageIndex"]);
+                int total = InformationManager.GetInstance().Count();
+                var information = InformationManager.GetInstance().SelectByPage(pageSize, pageIndex);
+
+                ViewBag.pageSize = pageSize;
+                ViewBag.pageIndex = pageIndex;
+                ViewBag.Total = total;
+
                 return View(information.ToList());
             }
             else
