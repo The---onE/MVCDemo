@@ -9,7 +9,7 @@
 </head>
 <body>
     <div>
-        <form action="/Home/ProcessRegister" method="post">
+        <form method="post">
             <table>
                 <tr>
                     <td>

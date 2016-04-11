@@ -25,15 +25,15 @@ namespace Demo.Controllers
         }
 
         [HttpPost]
-        public ActionResult ProcessRegister(string username, string password)
+        public ActionResult Register(string username, string password)
         {
-            //string username = Request["username"];
-            //string password = Request["password"];
             int result = UserManager.GetInstance().Register(username, password);
+            bool success = false;
             switch (result)
             {
                 case UserManager.SUCCESS:
                     ViewData["result"] = "注册成功";
+                    success = true;
                     break;
 
                 case UserManager.USERNAME_EXIST:
@@ -48,8 +48,9 @@ namespace Demo.Controllers
                     ViewData["result"] = "密码格式不正确";
                     break;
             }
+            ViewBag.Success = success;
 
-            return View();
+            return View("ProcessRegister");
         }
 
         public ActionResult Login()
@@ -58,14 +59,17 @@ namespace Demo.Controllers
         }
 
         [HttpPost]
-        public ActionResult ProcessLogin(string username, string password)
+        public ActionResult Login(string username, string password)
         {
             int result = UserManager.GetInstance().Login(username, password);
+            bool success = false;
             switch (result)
             {
                 case UserManager.SUCCESS:
                     ViewData["result"] = "登录成功";
                     var user = UserManager.GetInstance().user;
+                    Session["user"] = user;
+                    success = true;
                     break;
 
                 case UserManager.USERNAME_ERROR:
@@ -76,8 +80,9 @@ namespace Demo.Controllers
                     ViewData["result"] = "用户名密码不匹配";
                     break;
             }
+            ViewBag.Success = success;
 
-            return View();
+            return View("ProcessLogin");
         }
     }
 }

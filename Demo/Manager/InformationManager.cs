@@ -105,7 +105,6 @@ namespace Demo.Manager
 
         public List<Information> SelectAll()
         {
-            DateTime now = DateTime.Now;
             var info = context.Information;
 
             return info.ToList();
@@ -113,10 +112,16 @@ namespace Demo.Manager
 
         public List<Information> SelectByCreator(int userId)
         {
-            DateTime now = DateTime.Now;
             var info = context.Information.Where(c => c.createdUser == userId);
 
             return info.ToList();
+        }
+
+        public Information SelectById(int id)
+        {
+            var info = context.Information.Find(id);
+
+            return info;
         }
     }
 }
