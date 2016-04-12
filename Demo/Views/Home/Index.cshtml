@@ -1,0 +1,75 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>首页</title>
+
+    <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#login').click(function () {
+                var un = $('#username').val();
+                un = $.trim(un);
+                if (un.length < 1) {
+                    alert("用户名不能为空");
+                    return;
+                }
+
+                var pw = $('#password').val();
+                pw = $.trim(pw);
+                if (pw.length < 1) {
+                    alert("密码不能为空");
+                    return;
+                } else if (pw.length < 6) {
+                    alert("密码不能小于6位");
+                    return;
+                }
+
+                $.post("/Home/ProcessLogin", { username: un, password: pw }, function (result) {
+                    if (result == 1) {
+                        alert("登录成功");
+                        window.location.href = "/Data/Index"
+                    } else {
+                        alert("登录失败")
+                    }
+                })
+            })
+        });
+    </script>
+</head>
+<body>
+    <h1>登录</h1>
+    <div>
+        <table>
+            <tr>
+                <td>用户名</td>
+                <td>
+                    <input id="username" type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td>密码</td>
+                <td>
+                    <input id="password" type="password" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input id="login" type="button" value="登录" />
+                </td>
+                <td>
+                    @Html.ActionLink("注册", "Register")
+                </td>
+                <td>
+                    @Html.ActionLink("修改密码", "Reset")
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

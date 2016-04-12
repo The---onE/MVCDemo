@@ -128,8 +128,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\InformationController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -253,16 +253,6 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
-    <Content Include="Views\Home\Index.aspx" />
-    <Content Include="Views\Home\Login.aspx" />
-    <Content Include="Views\Home\ProcessLogin.aspx" />
-    <Content Include="Views\Home\ProcessRegister.aspx" />
-    <Content Include="Views\Home\Register.aspx" />
-    <Content Include="Views\Information\Create.aspx" />
-    <Content Include="Views\Information\Delete.aspx" />
-    <Content Include="Views\Information\Details.aspx" />
-    <Content Include="Views\Information\Edit.aspx" />
-    <Content Include="Views\Information\Index.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -289,6 +279,14 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Register.cshtml" />
+    <Content Include="Views\Home\Reset.cshtml" />
+    <Content Include="Views\Data\Index.cshtml" />
+    <Content Include="Views\Data\Create.cshtml" />
+    <Content Include="Views\Data\Edit.cshtml" />
+    <Content Include="Views\Data\Details.cshtml" />
+    <Content Include="Views\Data\DeleteByCondition.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

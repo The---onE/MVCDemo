@@ -1,0 +1,71 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>数据列表</title>
+
+    <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.delete').click(function () {
+                if (confirm("确认删除吗")) {
+                    var id = $(this).attr("id");
+
+                    $.post("/Data/Delete", { id: id }, function (result) {
+                        if (result == 1) {
+                            alert("删除成功");
+                            location.reload()
+                        } else {
+                            alert("删除失败")
+                        }
+                    })
+                }
+            })
+        });
+    </script>
+</head>
+<body>
+    <div>@Html.ActionLink("返回首页", "Index", "Home")</div>
+    <h1>数据列表</h1>
+    <p>
+        @Html.ActionLink("添加新数据", "Create")
+    </p>
+    <div>
+        <table>
+            <tr>
+                <th>创建者</th>
+                <th>数据</th>
+                <th>创建时间</th>
+                <th>更新时间</th>
+                <th>操作</th>
+                <th>@Html.ActionLink("条件删除", "DeleteByCondition")</th>
+            </tr>
+            @{
+                List<Demo.Models.Information> data = (List<Demo.Models.Information>)ViewData["data"];
+                foreach (var item in data)
+                {
+                <tr>
+                    <td>@item.User.username</td>
+                    <td>@item.data</td>
+                    <td>@item.createdTime</td>
+                    <td>@item.updatedTime</td>
+                    <td>
+                        @Html.ActionLink("编辑", "Edit", new { id = item.id })|
+                        @Html.ActionLink("详细", "Details", new { id = item.id })|
+                        <input class="delete" type="button" value="删除" id="@item.id" />
+                    </td>
+                </tr>
+                }
+            }
+        </table>
+    </div>
+    <div>
+        @Html.ShowPageNavigate((int)ViewBag.pageIndex, (int)ViewBag.pageSize, (int)ViewBag.Total)
+    </div>
+</body>
+</html>

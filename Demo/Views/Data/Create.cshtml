@@ -1,0 +1,51 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>添加新数据</title>
+
+    <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#create').click(function () {
+                var data = $('#data').val();
+
+                $.post("/Data/Create", { data : data }, function (result) {
+                    if (result == 1) {
+                        alert("添加成功");
+                        window.location.href = "/Data/Index"
+                    } else {
+                        alert("添加失败")
+                    }
+                })
+            })
+        });
+    </script>
+</head>
+<body>
+    <h1>添加新数据</h1>
+    <div>
+        <table>
+            <tr>
+                <td>数据</td>
+                <td>
+                    <input id="data" type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input id="create" type="button" value="添加" />
+                </td>
+                <td>
+                    @Html.ActionLink("回到列表", "Index")
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

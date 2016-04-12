@@ -1,0 +1,78 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>条件删除</title>
+
+    <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#delete').click(function () {
+                if (confirm("确认删除吗")) {
+                    var type = $('#type').val();
+                    var data = $('#data').val();
+                    $.post("/Data/DeleteByCondition", { type: type, data: data }, function (result) {
+                        if (result == 1) {
+                            alert("删除成功");
+                            location.reload()
+                        } else {
+                            alert("删除失败")
+                        }
+                    })
+                }
+            })
+        });
+    </script>
+</head>
+<body>
+    <div>@Html.ActionLink("回到列表", "Index")</div>
+    <h1>条件删除</h1>
+    <div>
+        <table>
+            <tr>
+                <th>创建者</th>
+                <th>数据</th>
+                <th>创建时间</th>
+                <th>更新时间</th>
+            </tr>
+            @{
+                List<Demo.Models.Information> data = (List<Demo.Models.Information>)ViewData["data"];
+                foreach (var item in data)
+                {
+                <tr>
+                    <td>@item.User.username</td>
+                    <td>@item.data</td>
+                    <td>@item.createdTime</td>
+                    <td>@item.updatedTime</td>
+                </tr>
+                }
+            }
+        </table>
+    </div>
+    <div>
+        @Html.ShowPageNavigate((int)ViewBag.pageIndex, (int)ViewBag.pageSize, (int)ViewBag.Total)
+    </div>
+    <div>
+        <table>
+            <tr>
+                <td>
+                    @Html.DropDownList("type")
+                </td>
+                <td>
+                    <input id="data" type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input id="delete" type="button" value="删除" />
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

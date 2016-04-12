@@ -1,0 +1,87 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>注册</title>
+
+    <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#register').click(function () {
+                var un = $('#username').val();
+                un = $.trim(un);
+                if (un.length < 1) {
+                    alert("用户名不能为空");
+                    return;
+                }
+
+                var pw = $('#password').val();
+                pw = $.trim(pw);
+                if (pw.length < 1) {
+                    alert("密码不能为空");
+                    return;
+                } else if (pw.length < 6) {
+                    alert("密码不能小于6位");
+                    return;
+                }
+
+                var pw2 = $('#password2').val();
+                pw2 = $.trim(pw2);
+                if (pw != pw2) {
+                    alert("两次输入密码不一致");
+                    return;
+                }
+
+                $.post("/Home/ProcessRegister", { username: un, password: pw }, function (result) {
+                    if (result == 1) {
+                        alert("注册成功");
+                        window.location.href = "/Home/Index";
+                    } else if (result == -3) {
+                        alert("该用户名已被注册");
+                    } else {
+                        alert("注册失败");
+                    }
+                })
+            })
+        });
+    </script>
+</head>
+<body>
+    <h1>注册</h1>
+    <div>
+        <table>
+            <tr>
+                <td>用户名</td>
+                <td>
+                    <input id="username" type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td>密码</td>
+                <td>
+                    <input id="password" type="password" />
+                </td>
+            </tr>
+            <tr>
+                <td>确认密码</td>
+                <td>
+                    <input id="password2" type="password" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input id="register" type="button" value="注册" />
+                </td>
+                <td>
+                    @Html.ActionLink("返回主页", "Index")
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

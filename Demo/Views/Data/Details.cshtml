@@ -1,0 +1,39 @@
+﻿@{
+    Layout = null;
+    Demo.Models.Information data = (Demo.Models.Information) ViewData["data"];
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>数据详情</title>
+</head>
+<body>
+    <h1>数据详情</h1>
+    <div>
+        <table>
+            <tr>
+                <td>创建者</td>
+                <td>@data.User.username</td>
+            </tr>
+            <tr>
+                <td>数据</td>
+                <td>@data.data</td>
+            </tr>
+            <tr>
+                <td>创建时间</td>
+                <td>@data.createdTime</td>
+            </tr>
+            <tr>
+                <td>更新时间</td>
+                <td>@data.updatedTime</td>
+            </tr>
+            <tr>
+                <td>@Html.ActionLink("回到列表", "Index")</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
