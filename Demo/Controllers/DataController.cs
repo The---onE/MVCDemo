@@ -220,6 +220,13 @@ namespace Demo.Controllers
         } 
         #endregion
 
+        #region 条件删除请求处理
+        /// <summary>
+        /// 条件删除请求处理
+        /// </summary>
+        /// <param name="type">条件类型</param>
+        /// <param name="data">条件内容</param>
+        /// <returns>若未登录返回登录界面，返回-1为删除失败，否则返回删除数量</returns>
         [HttpPost]
         public ActionResult DeleteByCondition(int type, string data)
         {
@@ -228,24 +235,14 @@ namespace Demo.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    List<Information> datas;
                     switch (type)
                     {
                         case 1: //通过创建者删除
-                            datas = InformationManager.GetInstance().SelectByCreator(data);
-                            foreach (var info in datas)
-                            {
-                                InformationManager.GetInstance().Delete(info.id, user.id);
-                            }
-                            return Content("" + 1);
+                            return Content("" + InformationManager.GetInstance().DeleteByCondition(c => c.User.username.Equals(data), user.id));
 
                         case 2: //通过数据删除
-                            datas = InformationManager.GetInstance().SelectByData(data);
-                            foreach (var info in datas)
-                            {
-                                InformationManager.GetInstance().Delete(info.id, user.id);
-                            }
-                            return Content("" + 1);
+                            return Content("" + InformationManager.GetInstance().DeleteByCondition(c => c.data.Equals(data), user.id));
+
                     }
                 }
 
@@ -256,5 +253,6 @@ namespace Demo.Controllers
                 return RedirectToAction("Index", "Home");
             }
         } 
+        #endregion 
     }
 }

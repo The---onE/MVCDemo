@@ -1,5 +1,6 @@
 ﻿@{
     Layout = null;
+    List<Demo.Models.Information> data = (List<Demo.Models.Information>)ViewData["data"];
 }
 
 <!DOCTYPE html>
@@ -46,7 +47,6 @@
                 <th>@Html.ActionLink("条件删除", "DeleteByCondition")</th>
             </tr>
             @{
-                List<Demo.Models.Information> data = (List<Demo.Models.Information>)ViewData["data"];
                 foreach (var item in data)
                 {
                 <tr>

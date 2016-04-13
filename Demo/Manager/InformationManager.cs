@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 
 namespace Demo.Manager
@@ -215,6 +216,37 @@ namespace Demo.Manager
 
             return info;
         } 
+        #endregion
+
+        #region 根据条件删除数据
+        /// <summary>
+        /// 根据条件删除数据
+        /// </summary>
+        /// <param name="condition">删除数据的条件</param>
+        /// <param name="userId">删除数据的用户ID</param>
+        /// <returns>返回删除的条数</returns>
+        public int DeleteByCondition(Expression<Func<Information, bool>> condition, int userId)
+        {
+            DateTime now = DateTime.Now;
+            var infos = context.Information.Where(condition);
+
+            foreach (var info in infos)
+            {
+                //向Modify数据库添加删除记录
+                Modify modify = new Modify();
+                modify.time = now;
+                modify.before = info.data;
+                modify.after = null;
+                modify.informationId = info.id;
+                modify.userId = userId;
+                context.Modify.Add(modify);
+
+                //删除Information数据库中数据
+                context.Entry(info).State = EntityState.Deleted;
+            }
+
+            return context.SaveChanges() / 2;
+        }
         #endregion
     }
 }

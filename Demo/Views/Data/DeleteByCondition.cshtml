@@ -17,9 +17,11 @@
                     var type = $('#type').val();
                     var data = $('#data').val();
                     $.post("/Data/DeleteByCondition", { type: type, data: data }, function (result) {
-                        if (result == 1) {
-                            alert("删除成功");
+                        if (result > 0) {
+                            alert("成功删除" + result + "条数据");
                             location.reload()
+                        } else if (result == 0) {
+                            alert("没有符合条件的数据");
                         } else {
                             alert("删除失败")
                         }
