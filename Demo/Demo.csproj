@@ -139,6 +139,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Manager\ContextManager.cs" />
+    <Compile Include="Manager\DataManager.cs" />
     <Compile Include="Manager\InformationManager.cs" />
     <Compile Include="Manager\UserManager.cs" />
     <Compile Include="Models\DemoModel.Context.cs">
