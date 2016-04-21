@@ -88,25 +88,24 @@ namespace Demo.Manager
                     row++;
                 }
                 /*添加表尾*/
-                //using (var range = workSheet.Cells[pocoUsers.Count + 3, 1, pocoUsers.Count + 3, 7])
-                //{
-                //    range.Merge = true;
-                //    range.Style.Font.SetFromFont(new Font("Britannic Bold", 18, FontStyle.Italic));
-                //    range.Style.HorizontalAlignment = ExcelHorizontalAlignment.CenterContinuous;
-                //    range.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                //    range.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(184, 204, 228));
-                //    range.Style.Font.Color.SetColor(Color.Black);
-                //    range.Value = "总人数:" + pocoUsers.Count + "人";
-                //}
+                using (var range = workSheet.Cells[informations.Count + 3, 1, informations.Count + 3, 4])
+                {
+                    range.Merge = true;
+                    range.Style.Font.SetFromFont(new Font("Britannic Bold", 18, FontStyle.Italic));
+                    range.Style.HorizontalAlignment = ExcelHorizontalAlignment.CenterContinuous;
+                    range.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    range.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(184, 204, 228));
+                    range.Style.Font.Color.SetColor(Color.Black);
+                    range.Value = "总条数:" + informations.Count;
+                }
 
                 /*设置整个Excel样式*/
-
                 //workSheet.Cells[workSheet.Dimension.Address].AutoFitColumns();
-                //workSheet.Cells[workSheet.Dimension.Address].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-                //workSheet.Cells[workSheet.Dimension.Address].Style.Border.Right.Style = ExcelBorderStyle.Thin;
-                //workSheet.Cells[workSheet.Dimension.Address].Style.HorizontalAlignment = ExcelHorizontalAlignment.CenterContinuous;
-
+                workSheet.Cells[workSheet.Dimension.Address].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                workSheet.Cells[workSheet.Dimension.Address].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                workSheet.Cells[workSheet.Dimension.Address].Style.HorizontalAlignment = ExcelHorizontalAlignment.CenterContinuous;
                 workSheet.Cells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
                 package.Save();
             }
         }  
