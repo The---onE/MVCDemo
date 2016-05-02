@@ -39,3 +39,13 @@ F:\DotNet\Demo\Demo\bin\zh-Hans\System.Web.WebPages.Razor.resources.dll
 F:\DotNet\Demo\Demo\obj\Debug\Demo.dll
 F:\DotNet\Demo\Demo\obj\Debug\Demo.pdb
 F:\DotNet\Demo\Demo\obj\Debug\Demo.csprojResolveAssemblyReference.cache
+F:\DotNet\Demo\Demo\bin\Demo.dll.config
+F:\DotNet\Demo\Demo\bin\System.Net.Http.Formatting.dll
+F:\DotNet\Demo\Demo\bin\System.Web.Http.dll
+F:\DotNet\Demo\Demo\bin\System.Web.Http.WebHost.dll
+F:\DotNet\Demo\Demo\bin\System.Net.Http.Formatting.xml
+F:\DotNet\Demo\Demo\bin\System.Web.Http.xml
+F:\DotNet\Demo\Demo\bin\System.Web.Http.WebHost.xml
+F:\DotNet\Demo\Demo\bin\zh-Hans\System.Net.Http.Formatting.resources.dll
+F:\DotNet\Demo\Demo\bin\zh-Hans\System.Web.Http.resources.dll
+F:\DotNet\Demo\Demo\bin\zh-Hans\System.Web.Http.WebHost.resources.dll

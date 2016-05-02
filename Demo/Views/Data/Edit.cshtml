@@ -15,7 +15,7 @@
         $(function () {
             $('#edit').click(function () {
                 var data = $('#data').val();
-                $.post("/Data/Edit", { id: @ViewBag.id, data:data }, function (result) {
+                $.post("/Data/Edit", { id: $('#id').val(), data:data }, function (result) {
                     if (result == 1) {
                         alert("修改成功");
                         window.location.href = "/Data/Index"
@@ -29,6 +29,7 @@
 </head>
 <body>
     <h1>编辑数据</h1>
+    <input id="id" value="@ViewBag.id" type="hidden" />
     <div>
         <table>
             <tr>
